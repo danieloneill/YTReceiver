@@ -51,6 +51,12 @@ $ make -j12
 $ ./ytreceiver
 ```
 
+There's no magic in it. This can be run directly inside qml6 without having to compile diddly-squat:
+```bash
+$ cd YTReceiver
+$ qml6 Main.qml
+```
+
 ## AppImage
 
 To make an AppImage, a bash script is provided called `make_appimage.sh` which makes several assumptions:
@@ -59,5 +65,13 @@ To make an AppImage, a bash script is provided called `make_appimage.sh` which m
 * You are on a BSD/Linux system with access to create/delete stuff in /tmp
 * You have squashfs tools installed
 * You have wget
+* You are building on x86_64<sup>1</sup>
+* You want Wayland support<sup>2</sup>
 
-This script will pack in Wayland support by default, which as I understand it may not work on all distros at the moment. Just edit those environment variables and remove those if you want to stick with xcb.
+<sup>1</sup> If you aren't on x86_64 change `HOST_ARCH` to your arch at the top of the script. Check which architectures are available at the [linuxdeploy-plugin-qt releases page](https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/tag/continuous).
+
+<sup>2</sup> Wayland support (as I understand it) may not work on all distros at the moment. Just edit those environment variables and remove those if you want to stick with only xcb.
+
+This script also instructs linuxdeploy to not strip binaries/libraries, because (on my system) it is currently (2025-05-05) broken.
+
+This script is also clearly my first attempt at using AppImage. We're learnding.
