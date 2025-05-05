@@ -48,7 +48,7 @@ $ mkdir build
 $ cd build
 $ qmake6 ..
 $ make -j12
-$ ./YTReceiver
+$ ./ytreceiver
 ```
 
 ## AppImage
