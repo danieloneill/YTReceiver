@@ -1,6 +1,7 @@
 #!/bin/sh
 
 BUILTBINARY=./build/ytreceiver
+HOST_ARCH=x86_64
 
 set -e
 
@@ -8,9 +9,9 @@ rm -R /tmp/YTReceiver-AppDir || true
 mkdir /tmp/YTReceiver-AppDir
 
 # This is gross:
-BORKED=/tmp/linuxdeploy-x86_64.AppImage
-if [ ! -f linuxdeploy-x86_64.AppImage ]; then
-	wget -O ${BORKED} https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+BORKED=/tmp/linuxdeploy-${HOST_ARCH}.AppImage
+if [ ! -f linuxdeploy-${HOST_ARCH}.AppImage ]; then
+	wget -O ${BORKED} https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-${HOST_ARCH}.AppImage
 	chmod +x ${BORKED}
 	
 	#${BORKED} --appimage-extract
@@ -20,18 +21,18 @@ if [ ! -f linuxdeploy-x86_64.AppImage ]; then
 	cp ${BORKED} .
 fi
 
-if [ ! -f linuxdeploy-plugin-qt-x86_64.AppImage ]; then
-	wget -O linuxdeploy-plugin-qt-x86_64.AppImage "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
-	chmod +x linuxdeploy-plugin-qt-x86_64.AppImage
+if [ ! -f linuxdeploy-plugin-qt-${HOST_ARCH}.AppImage ]; then
+	wget -O linuxdeploy-plugin-qt-${HOST_ARCH}.AppImage "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-${HOST_ARCH}.AppImage"
+	chmod +x linuxdeploy-plugin-qt-${HOST_ARCH}.AppImage
 fi
 
-if [ ! -f appimagetool-x86_64.AppImage ]; then
-	wget -O appimagetool-x86_64.AppImage "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
-	chmod +x appimagetool-x86_64.AppImage
+if [ ! -f appimagetool-${HOST_ARCH}.AppImage ]; then
+	wget -O appimagetool-${HOST_ARCH}.AppImage "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${HOST_ARCH}.AppImage"
+	chmod +x appimagetool-${HOST_ARCH}.AppImage
 fi
 
 # This is b0rxed at the moment:
-#linuxdeploy-x86_64.AppImage --appdir /tmp/YTReceiver-AppDir --executable ${BUILTBINARY} --plugin qt --output appimage
+#linuxdeploy-${HOST_ARCH}.AppImage --appdir /tmp/YTReceiver-AppDir --executable ${BUILTBINARY} --plugin qt --output appimage
 
 cp -Rad appimage-data/* /tmp/YTReceiver-AppDir/
 ln -s usr/bin/ytreceiver /tmp/YTReceiver-AppDir/AppRun
@@ -42,10 +43,10 @@ cp Main.qml /tmp/YTReceiver-AppDir/
 EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so" \
 NO_STRIP=true \
 EXTRA_QT_MODULES="webenginecore;waylandcompositor;webenginequick;webenginequickdelegatesqml" \
-	./linuxdeploy-x86_64.AppImage --appdir /tmp/YTReceiver-AppDir --executable ${BUILTBINARY} --plugin qt --output appimage
-#rm ./linuxdeploy-x86_64.AppImage
+	./linuxdeploy-${HOST_ARCH}.AppImage --appdir /tmp/YTReceiver-AppDir --executable ${BUILTBINARY} --plugin qt --output appimage
+#rm ./linuxdeploy-${HOST_ARCH}.AppImage
 
 rm /tmp/YTReceiver-AppDir/Main.qml
 
-appimagetool-x86_64.AppImage /tmp/YTReceiver-AppDir
+appimagetool-${HOST_ARCH}.AppImage /tmp/YTReceiver-AppDir
 rm -R /tmp/YTReceiver-AppDir
