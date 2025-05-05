@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=YTReceiver
+GenericName=Youtube cast receiver/display
+Exec=/usr/bin/ytreceiver
+Icon=YTReceiver
+Terminal=false
+Type=Application
+Categories=AudioVideo;Recorder;
+StartupNotify=true
+StartupWMClass=ytreceiver
